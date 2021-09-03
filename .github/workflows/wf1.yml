@@ -24,7 +24,7 @@ jobs:
         with:
         
           tag_name: v${{ github.run_number }}
-          release_name: Release ${{ github.ref }}
+          release_name: Release ${{ github.run.number }}
           body: ${{steps.github_release.outputs.changelog}}
           draft: false
           prerelease: false
