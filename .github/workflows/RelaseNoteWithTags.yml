@@ -11,6 +11,7 @@ jobs:
       with:
         fetch-depth: '0'
     - name: Bump version and push tag
+      if: ${{ github.event_name == 'push' && runner.os == 'Linux' && matrix.java == '11' }}
       uses: anothrNick/github-tag-action@1.26.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
