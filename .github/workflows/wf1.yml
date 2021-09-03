@@ -8,10 +8,16 @@ on:
 name: Create Release
 
 jobs:
+  prod-check:
+    if: ${{ github.ref == 'main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "RAJANI $GITHUB_RUN_NUMBER"
   build:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
+    
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create Release
@@ -27,4 +33,4 @@ jobs:
           draft: false
           prerelease: false
       
-          echo: rajani
+
