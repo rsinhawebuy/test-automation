@@ -9,24 +9,21 @@ name: Create Release
 
 jobs:
   
-  build:
-    name: Create Release
+   build:
     runs-on: ubuntu-latest
     steps:
-    
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-        
-          tag_name: v${{ github.run_number }}
-          release_name: Release ${{ github.run.number }}
-          body: ${{steps.github_release.outputs.changelog}}
-          draft: false
-          prerelease: false
+    - uses: actions/checkout@v1
+    - name: Create Release Folder
+      run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' . ./release
+    - name: Switch to Release Folder
+      run: |
+        cd release
+        ls -la
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO_OWNER: rsinha
+       
       
 
